@@ -30,11 +30,11 @@ public class TodoController {
   }
 
   // Recoit les donnees du formulaire et les affiche sur la page de detail.
-  @PostMapping("/todos/confirm-form")
+  @PostMapping("/todos/confirm")
   public String confirm(
       @RequestParam("title") String title,
-      @RequestParam("description") String description,
-      @RequestParam("priority") String priority,
+      @RequestParam(value = "description", required = false) String description,
+      @RequestParam(value = "priority", defaultValue = "3") Integer priority,
       Model model) {
     model.addAttribute("title", title);
     model.addAttribute("description", description);
