@@ -23,8 +23,8 @@ public class TodoService {
   }
 
   @Transactional(readOnly = true)
-  public List<Todo> findAllOrderByPriorityAsc() {
-    return todoRepository.findAllOrderByPriorityAsc();
+  public List<Todo> findAllOrderByCreatedAtDesc() {
+    return todoRepository.findAllOrderByCreatedAtDesc();
   }
 
   private Todo toEntity(TodoForm form) {

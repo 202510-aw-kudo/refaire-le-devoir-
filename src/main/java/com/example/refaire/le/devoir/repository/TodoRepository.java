@@ -16,8 +16,8 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
 
   List<Todo> findByDueDateLessThanEqual(LocalDate date);
 
-  default List<Todo> findAllOrderByPriorityAsc() {
-    return findAll(Sort.by(Sort.Direction.ASC, "priority"));
+  default List<Todo> findAllOrderByCreatedAtDesc() {
+    return findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
   }
 
   @Query("select t from Todo t where t.completed = :completed and t.title like %:keyword%")

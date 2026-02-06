@@ -24,7 +24,7 @@ public class TodoController {
   // Affiche la page de liste des todos.
   @GetMapping("/todos")
   public String list(Model model) {
-    List<Todo> todos = todoService.findAllOrderByPriorityAsc();
+    List<Todo> todos = todoService.findAllOrderByCreatedAtDesc();
     model.addAttribute("todos", todos);
     return "todo/list";
   }
