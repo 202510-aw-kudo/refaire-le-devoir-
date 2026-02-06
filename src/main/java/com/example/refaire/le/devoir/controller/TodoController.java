@@ -39,7 +39,20 @@ public class TodoController {
     model.addAttribute("title", title);
     model.addAttribute("description", description);
     model.addAttribute("priority", priority);
-    return "todo/detail";
+    return "todo/confirm";
+  }
+
+  // Enregistre un todo et affiche la page de fin.
+  @PostMapping("/todos/complete")
+  public String complete(
+      @RequestParam("title") String title,
+      @RequestParam(value = "description", required = false) String description,
+      @RequestParam(value = "priority", defaultValue = "3") Integer priority,
+      Model model) {
+    model.addAttribute("title", title);
+    model.addAttribute("description", description);
+    model.addAttribute("priority", priority);
+    return "todo/complete";
   }
 
   // Affiche le formulaire d'edition d'un todo.
