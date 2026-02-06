@@ -30,7 +30,7 @@ public class TodoController {
   }
 
   // Recoit les donnees du formulaire et les affiche sur la page de detail.
-  @PostMapping("/todos/confirm")
+  @PostMapping("/todos/confirm-form")
   public String confirm(
       @RequestParam("title") String title,
       @RequestParam("description") String description,
