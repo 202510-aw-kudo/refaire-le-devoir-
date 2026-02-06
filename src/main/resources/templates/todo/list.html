@@ -87,6 +87,7 @@
                       th:action="@{/todos/{id}/delete(id=${todo.id})}"
                       method="post"
                       class="d-inline"
+                      onsubmit="return confirm('本当に削除しますか？');"
                     >
                       <button type="submit" class="btn btn-sm btn-outline-danger">
                         削除
