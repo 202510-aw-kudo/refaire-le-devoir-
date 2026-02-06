@@ -31,6 +31,15 @@ public class TodoService {
     todoRepository.deleteById(id);
   }
 
+  @Transactional
+  public Todo toggleCompleted(Long id) {
+    Todo todo = todoRepository.findById(id)
+        .orElseThrow(() -> new com.example.refaire.le.devoir.exception.TodoNotFoundException(id));
+    Boolean current = todo.getCompleted();
+    todo.setCompleted(current == null ? Boolean.TRUE : !current);
+    return todoRepository.save(todo);
+  }
+
   @Transactional(readOnly = true)
   public List<Todo> findAllOrderByCreatedAtDesc() {
     return todoRepository.findAllOrderByCreatedAtDesc();

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @Controller
 public class TodoController {
@@ -61,6 +62,21 @@ public class TodoController {
     todoService.deleteById(id);
     redirectAttributes.addFlashAttribute("message", "ToDoを削除しました");
     return "redirect:/todos";
+  }
+
+  // Toggle completed (sync)
+  @PostMapping("/todos/{id}/toggle")
+  public String toggle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+    todoService.toggleCompleted(id);
+    redirectAttributes.addFlashAttribute("message", "完了状態を更新しました");
+    return "redirect:/todos";
+  }
+
+  // Toggle completed (AJAX)
+  @PostMapping("/todos/{id}/toggle-ajax")
+  public ResponseEntity<Void> toggleAjax(@PathVariable("id") Long id) {
+    todoService.toggleCompleted(id);
+    return ResponseEntity.ok().build();
   }
 
   // Affiche le formulaire d'edition d'un todo.
