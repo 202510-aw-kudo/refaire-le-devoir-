@@ -1,5 +1,6 @@
 package com.example.refaire.le.devoir.controller;
 
+import com.example.refaire.le.devoir.entity.Todo;
 import com.example.refaire.le.devoir.form.TodoForm;
 import com.example.refaire.le.devoir.service.TodoService;
 import java.util.List;
@@ -23,7 +24,7 @@ public class TodoController {
   // Affiche la page de liste des todos.
   @GetMapping("/todos")
   public String list(Model model) {
-    List<?> todos = todoService.findAllOrderByPriorityAsc();
+    List<Todo> todos = todoService.findAllOrderByPriorityAsc();
     model.addAttribute("todos", todos);
     return "todo/list";
   }
