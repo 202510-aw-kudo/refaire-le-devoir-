@@ -6,11 +6,13 @@ import com.example.refaire.le.devoir.service.TodoService;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.http.HttpStatus;
 
 @Controller
 public class TodoController {
@@ -64,7 +66,10 @@ public class TodoController {
   // Affiche le formulaire d'edition d'un todo.
   @GetMapping("/todos/{id}/edit")
   public String edit(@PathVariable("id") Long id, Model model) {
+    Todo todo = todoService.findById(id)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     model.addAttribute("todoId", id);
-    return "todo/edit";
+    model.addAttribute("todoForm", todoService.toForm(todo));
+    return "todo/form";
   }
 }

@@ -27,6 +27,7 @@
                   class="form-control"
                   id="title"
                   name="title"
+                  th:value="${todoForm != null} ? ${todoForm.title} : ''"
                   required
                 />
               </div>
@@ -38,17 +39,18 @@
                   id="description"
                   name="description"
                   rows="4"
+                  th:text="${todoForm != null} ? ${todoForm.description} : ''"
                 ></textarea>
               </div>
 
               <div class="mb-4">
                 <label for="priority" class="form-label">優先度</label>
                 <select class="form-select" id="priority" name="priority">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3" selected>3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
+                  <option value="1" th:selected="${todoForm != null and todoForm.priority == 1}">1</option>
+                  <option value="2" th:selected="${todoForm != null and todoForm.priority == 2}">2</option>
+                  <option value="3" th:selected="${todoForm == null or todoForm.priority == null or todoForm.priority == 3}">3</option>
+                  <option value="4" th:selected="${todoForm != null and todoForm.priority == 4}">4</option>
+                  <option value="5" th:selected="${todoForm != null and todoForm.priority == 5}">5</option>
                 </select>
               </div>
 

@@ -4,6 +4,7 @@ import com.example.refaire.le.devoir.entity.Todo;
 import com.example.refaire.le.devoir.form.TodoForm;
 import com.example.refaire.le.devoir.repository.TodoRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +34,19 @@ public class TodoService {
   @Transactional(readOnly = true)
   public List<Todo> findAllOrderByCreatedAtDesc() {
     return todoRepository.findAllOrderByCreatedAtDesc();
+  }
+
+  @Transactional(readOnly = true)
+  public Optional<Todo> findById(Long id) {
+    return todoRepository.findById(id);
+  }
+
+  public TodoForm toForm(Todo todo) {
+    TodoForm form = new TodoForm();
+    form.setTitle(todo.getTitle());
+    form.setDescription(todo.getDescription());
+    form.setPriority(todo.getPriority());
+    return form;
   }
 
   private Todo toEntity(TodoForm form) {
