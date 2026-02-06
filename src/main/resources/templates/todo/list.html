@@ -71,7 +71,14 @@
             </thead>
             <tbody>
               <tr th:each="todo : ${todos}">
-                <td class="ps-4" th:text="${todo.title}">サンプルタスク</td>
+                <td class="ps-4">
+                  <span
+                    th:text="${todo.title}"
+                    th:classappend="${todo.completed} ? 'text-decoration-line-through text-muted' : ''"
+                  >
+                    サンプルタスク
+                  </span>
+                </td>
                 <td
                   th:classappend="${todo.dueDate != null and todo.dueDate.isBefore(T(java.time.LocalDate).now())} ? 'text-danger fw-semibold' : ''"
                   th:text="${todo.dueDate != null} ? ${#temporals.format(todo.dueDate, 'yyyy/MM/dd')} : '-'"
@@ -80,8 +87,20 @@
                 </td>
                 <td th:text="${#strings.repeat('★', todo.priority)}">★★★</td>
                 <td>
-                  <span th:if="${todo.completed}" class="text-success">✓</span>
-                  <span th:unless="${todo.completed}" class="text-muted">-</span>
+                  <form
+                    th:action="@{/todos/{id}/toggle(id=${todo.id})}"
+                    method="post"
+                    class="d-inline"
+                  >
+                    <button
+                      type="submit"
+                      class="btn btn-sm"
+                      th:classappend="${todo.completed} ? 'btn-success' : 'btn-outline-secondary'"
+                      th:text="${todo.completed} ? '✓' : '○'"
+                    >
+                      ○
+                    </button>
+                  </form>
                 </td>
                 <td class="text-end pe-4">
                   <div class="d-inline-flex gap-2">
@@ -106,6 +125,14 @@
                       </button>
                     </form>
                   </div>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-success ms-2 js-toggle"
+                    th:attr="data-id=${todo.id}"
+                    th:text="${todo.completed} ? '完了解除(Ajax)' : '完了(Ajax)'"
+                  >
+                    完了(Ajax)
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -129,6 +156,27 @@
           alertInstance.close();
         });
       }, 3000);
+    </script>
+    <script>
+      document.querySelectorAll(".js-toggle").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const id = button.getAttribute("data-id");
+          try {
+            const response = await fetch(`/todos/${id}/toggle-ajax`, {
+              method: "POST",
+              headers: {
+                "X-Requested-With": "XMLHttpRequest",
+              },
+            });
+            if (!response.ok) {
+              throw new Error("toggle failed");
+            }
+            window.location.reload();
+          } catch (e) {
+            alert("更新に失敗しました");
+          }
+        });
+      });
     </script>
   </body>
 </html>
