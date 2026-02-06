@@ -53,6 +53,14 @@ public class TodoController {
     return "redirect:/todos";
   }
 
+  // Supprime un todo puis redirige vers la liste.
+  @PostMapping("/todos/{id}/delete")
+  public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+    todoService.deleteById(id);
+    redirectAttributes.addFlashAttribute("message", "削除が完了しました");
+    return "redirect:/todos";
+  }
+
   // Affiche le formulaire d'edition d'un todo.
   @GetMapping("/todos/{id}/edit")
   public String edit(@PathVariable("id") Long id, Model model) {

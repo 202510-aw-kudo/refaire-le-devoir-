@@ -22,6 +22,14 @@ public class TodoService {
     return todoRepository.save(todo);
   }
 
+  @Transactional
+  public void deleteById(Long id) {
+    if (!todoRepository.existsById(id)) {
+      throw new com.example.refaire.le.devoir.exception.TodoNotFoundException(id);
+    }
+    todoRepository.deleteById(id);
+  }
+
   @Transactional(readOnly = true)
   public List<Todo> findAllOrderByCreatedAtDesc() {
     return todoRepository.findAllOrderByCreatedAtDesc();

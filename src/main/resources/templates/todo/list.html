@@ -28,6 +28,14 @@
       >
         登録が完了しました
       </div>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        th:if="${error}"
+        th:text="${error}"
+      >
+        指定されたToDoが見つかりませんでした
+      </div>
       <div th:if="${#lists.isEmpty(todos)}" class="card shadow-sm">
         <div class="card-body text-center py-5">
           <div class="display-6 text-muted mb-3">ToDoがまだ登録されていません</div>
