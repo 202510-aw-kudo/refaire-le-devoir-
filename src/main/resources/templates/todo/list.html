@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
@@ -28,7 +28,7 @@
                 <th scope="col" class="ps-4">ID</th>
                 <th scope="col">タイトル</th>
                 <th scope="col">作成日</th>
-                <th scope="col" class="text-end pe-4">操作</th>
+                <th scope="col" class="text-end pe-4">詳細</th>
               </tr>
             </thead>
             <tbody>
@@ -37,9 +37,11 @@
                 <td th:text="${todo.title}">サンプルタスク</td>
                 <td th:text="${todo.createdAt}">2026/02/05</td>
                 <td class="text-end pe-4">
-                  <a class="btn btn-sm btn-outline-primary" th:href="@{/todos/{id}(id=${todo.id})}">詳細</a>
-                  <a class="btn btn-sm btn-outline-secondary" th:href="@{/todos/{id}/edit(id=${todo.id})}">編集</a>
-                  <a class="btn btn-sm btn-outline-danger" th:href="@{/todos/{id}/delete(id=${todo.id})}">削除</a>
+                  <a
+                    class="btn btn-sm btn-outline-primary"
+                    th:href="@{/todos/{id}(id=${todo.id})}"
+                    >詳細</a
+                  >
                 </td>
               </tr>
               <tr th:if="${#lists.isEmpty(todos)}">
@@ -54,9 +56,7 @@
     </main>
 
     <footer class="border-top bg-white">
-      <div class="container py-3 text-muted small">
-        ToDo Application
-      </div>
+      <div class="container py-3 text-muted small">ToDo Application</div>
     </footer>
   </body>
 </html>
